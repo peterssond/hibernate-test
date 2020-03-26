@@ -18,36 +18,22 @@
  */
 package com.github.peterssond.hibernatetest;
 
-import java.util.UUID;
-import javax.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import lombok.Data;
 
-@Component
-public class ParentBootstrapBean {
+@Data
+@Entity
+public class EntityA {
 
-    private final ParentRepository parentRepo;
+    @Id
+    private String aId;
 
-    @Autowired
-    public ParentBootstrapBean(ParentRepository parentRepo) {
-        this.parentRepo = parentRepo;
-    }
-
-    @PostConstruct
-    public void init() {
-
-        parentRepo.save(createParent(true, UUID.randomUUID().toString()));
-    }
-
-    private Parent createParent(boolean includeChild, String guid) {
-        Parent parent = new Parent();
-        parent.setParentId(guid);
-
-        if (includeChild) {
-            parent.setChild(new Child(guid));
-        }
-
-        return parent;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private EntityB entityB;
 
 }

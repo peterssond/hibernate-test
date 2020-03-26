@@ -5,22 +5,22 @@
     logicalFilePath="classpath:changelog/changelog.xml">
 
   <changeSet id="1" author="dp">
-    <createTable tableName="parent">
-      <column name="parent_id" type="varchar(64)">
+    <createTable tableName="entitya">
+      <column name="a_id" type="varchar(64)">
         <constraints primaryKey="true" nullable="false"/>
       </column>
     </createTable>
   </changeSet>
 
   <changeSet id="2" author="dp">
-    <createTable tableName="child">
-      <column name="parent_id" type="varchar(64)">
+    <createTable tableName="entityb">
+      <column name="a_id" type="varchar(64)">
         <constraints primaryKey="true" nullable="false"/>
       </column>
     </createTable>
 
-    <addForeignKeyConstraint constraintName="CHILD_PARENT_FK"
-        baseColumnNames="parent_id" baseTableName="child"
-        referencedColumnNames="parent_id" referencedTableName="parent"/>
+    <addForeignKeyConstraint constraintName="A_B_FK"
+        baseColumnNames="a_id" baseTableName="entityb"
+        referencedColumnNames="a_id" referencedTableName="entitya"/>
   </changeSet>
 </databaseChangeLog>

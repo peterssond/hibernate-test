@@ -18,9 +18,36 @@
  */
 package com.github.peterssond.hibernatetest;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.UUID;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public interface ParentRepository extends JpaRepository<Parent, String> {
+@Component
+public class ABootstrapBean {
 
+    private final ARepository aRepo;
+
+    @Autowired
+    public ABootstrapBean(ARepository aRepo) {
+        this.aRepo = aRepo;
+    }
+
+    @PostConstruct
+    public void init() {
+
+        aRepo.save(createA(true, UUID.randomUUID().toString()));
+    }
+
+    private EntityA createA(boolean includeB, String guid) {
+        EntityA entityA = new EntityA();
+        entityA.setAId(guid);
+
+        if (includeB) {
+            entityA.setEntityB(new EntityB(guid));
+        }
+
+        return entityA;
+    }
 
 }

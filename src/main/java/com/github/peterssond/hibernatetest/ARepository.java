@@ -18,18 +18,9 @@
  */
 package com.github.peterssond.hibernatetest;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-public class Child {
+public interface ARepository extends JpaRepository<EntityA, String> {
 
-    @Id
-    private String parentId;
+
 }
